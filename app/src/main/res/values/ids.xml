@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <!-- app_id -->
+    <string name="app_id" translatable="false">882684801134</string>
+    <!-- package_name -->
+    <string name="package_name" translatable="false">es.uniovi.imovil.fcrtrainer2018</string>
+    <!-- achievement MiniHacker -->
+    <string name="achievement_minihacker" translatable="false">CgkI7uD0oNgZEAIQAQ</string>
+    <!-- achievement Junior Hacker -->
+    <string name="achievement_junior_hacker" translatable="false">CgkI7uD0oNgZEAIQAw</string>
+    <!-- achievement Senior Hacker -->
+    <string name="achievement_senior_hacker" translatable="false">CgkI7uD0oNgZEAIQBA</string>
+    <!-- achievement Master Hacker -->
+    <string name="achievement_master_hacker" translatable="false">CgkI7uD0oNgZEAIQAg</string>
+    <!-- achievement Coder -->
+    <string name="achievement_coder" translatable="false">CgkI7uD0oNgZEAIQBQ</string>
+    <!-- achievement 00011001 -->
+    <string name="achievement_00011001" translatable="false">CgkI7uD0oNgZEAIQBg</string>
+    <!-- achievement Netshark -->
+    <string name="achievement_netshark" translatable="false">CgkI7uD0oNgZEAIQBw</string>
+    <!-- achievement That's a 50! -->
+    <string name="achievement_thats_a_50" translatable="false">CgkI7uD0oNgZEAIQCA</string>
+    <!-- leaderboard Aprendices -->
+    <string name="leaderboard_aprendices" translatable="false">CgkI7uD0oNgZEAIQCQ</string>
+    <!-- leaderboard Iniciados -->
+    <string name="leaderboard_iniciados" translatable="false">CgkI7uD0oNgZEAIQCw</string>
+    <!-- leaderboard Maestros -->
+    <string name="leaderboard_maestros" translatable="false">CgkI7uD0oNgZEAIQCg</string>
+</resources>

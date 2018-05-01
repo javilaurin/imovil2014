@@ -29,4 +29,16 @@ limitations under the License.
         android:showAsAction="never"
         android:title="@string/action_help"/>
 
+    <item
+        android:id="@+id/action_achievements"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_achievements"/>
+
+    <item
+        android:id="@+id/action_leaderboards"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_leaderboards"/>
+
 </menu>

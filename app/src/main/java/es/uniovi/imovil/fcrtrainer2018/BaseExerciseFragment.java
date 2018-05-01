@@ -126,6 +126,8 @@ public abstract class BaseExerciseFragment extends Fragment {
 	private View mResult;
 	private ImageView mResultImage;
 
+    private Listener mListener = null;
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		mResult = (View) view.findViewById(R.id.result);
@@ -446,8 +448,7 @@ public abstract class BaseExerciseFragment extends Fragment {
 
 	/**
 	 * Saves the score using the Highscore Manager.
-	 * 
-	 * @param score
+	 *
 	 */
 	protected void saveScore() {
 		String user = getString(R.string.default_user_name);
@@ -460,5 +461,12 @@ public abstract class BaseExerciseFragment extends Fragment {
 		}
 	}
 
+    interface Listener {
+        // called when the user presses the `Show Achievements` button
+        void onShowAchievementsRequested();
 
+        // called when the user presses the `Show Leaderboards` button
+        void onShowLeaderboardsRequested();
+
+    }
 }
