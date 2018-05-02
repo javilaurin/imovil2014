@@ -444,12 +444,31 @@ public class MainActivity extends AppCompatActivity implements
 				.show();
 	}
 
+
+	public void onEnteredScore(int score, String level) {
+
+		Log.d("DEBUG", String.valueOf(score));
+
+		// check for achievements
+		checkForAchievements(score);
+		Log.d(getClass().getSimpleName(),"Achievements checked");
+
+		// update leaderboards
+		updateLeaderboards(score, level);
+		Log.d(getClass().getSimpleName(),"Leaderboards updated");
+
+		// push those accomplishments to the cloud, if signed in
+		pushAccomplishments();
+		Log.d(getClass().getSimpleName(),"Accomplishments pushed");
+	}
+
+
 	/**
 	 * Check for achievements and unlock the appropriate ones.
 	 *
 	 * @param score the score the user got.
 	 */
-	private void checkForAchievements(int score) {
+	public void checkForAchievements(int score) {
 		// Check if each condition is met; if so, unlock the corresponding
 		// achievement.
 		// TODO: Reemplazar con nuestros logros comprobando sus condiciones
@@ -465,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements
 		}
 		*/
 
-		if (score == 50) {
+		if (score >= 50) {
 			mOutbox.mThatsAFiftyAchievement = true;
 			achievementToast(getString(R.string.achievement_thatsa50_toast_text));
 		}
@@ -484,11 +503,41 @@ public class MainActivity extends AppCompatActivity implements
 	}
 
 	private void pushAccomplishments() {
-		// Hacemos push del estado de todos los logros
+		// Hacemos push del estado de todos los logros y puntuaciones
 		// TODO: Reemplazar con nuestros logros
 		if (!isSignedIn()) {
 			// can't push to the cloud, try again later
 			return;
+		}
+		if (mOutbox.mBoredSteps > 0) {
+			mAchievementsClient.increment(getString(R.string.achievement_minihacker),
+					mOutbox.mBoredSteps);
+			mAchievementsClient.increment(getString(R.string.achievement_junior_hacker),
+					mOutbox.mBoredSteps);
+			mAchievementsClient.increment(getString(R.string.achievement_senior_hacker),
+					mOutbox.mBoredSteps);
+			mAchievementsClient.increment(getString(R.string.achievement_master_hacker),
+					mOutbox.mBoredSteps);
+			mOutbox.mBoredSteps = 0;
+		}
+		if(mOutbox.mThatsAFiftyAchievement){
+			mAchievementsClient.unlock(getString(R.string.achievement_thats_a_50));
+			mOutbox.mThatsAFiftyAchievement = false;
+		}
+		if (mOutbox.mMaxPointsAprendiz >= 0) {
+			mLeaderboardsClient.submitScore(getString(R.string.leaderboard_aprendices),
+					mOutbox.mMaxPointsAprendiz);
+			mOutbox.mMaxPointsAprendiz = -1;
+		}
+		if (mOutbox.mMaxPointsIniciado >= 0) {
+			mLeaderboardsClient.submitScore(getString(R.string.leaderboard_iniciados),
+					mOutbox.mMaxPointsIniciado);
+			mOutbox.mMaxPointsIniciado = -1;
+		}
+		if (mOutbox.mMaxPointsMaestro >= 0) {
+			mLeaderboardsClient.submitScore(getString(R.string.leaderboard_maestros),
+					mOutbox.mMaxPointsMaestro);
+			mOutbox.mMaxPointsMaestro = -1;
 		}
 		/*if (mOutbox.mPrimeAchievement) {
 			mAchievementsClient.unlock(getString(R.string.achievement_prime));
@@ -529,11 +578,33 @@ public class MainActivity extends AppCompatActivity implements
 	/**
 	 * Update leaderboards with the user's score.
 	 *
-	 * @param finalScore The score the user got.
+	 * @param score The score the user got.
 	 */
-	private void updateLeaderboards(int finalScore) {
+	public void updateLeaderboards(int score, String level) {
 		// Según la dificultad
 		//TODO: Actualizaríamos la tabla de puntuaciones correspondiente si es mayor que nuestra mejor marca
+		Log.d("DEBUG", level);
+		Log.d("DEBUG", getResources().getString(R.string.pref_level1_name));
+		Log.d("DEBUG", getResources().getString(R.string.pref_level2_name));
+		Log.d("DEBUG", getResources().getString(R.string.pref_level3_name));
+
+		if(level.equals(getResources().getString(R.string.pref_level1_name)) && mOutbox.mMaxPointsAprendiz < score){
+			//Actualizamos la tabla Aprendiz
+			mOutbox.mMaxPointsAprendiz = score;
+		}
+		else{
+			if(level.equals(getResources().getString(R.string.pref_level2_name)) && mOutbox.mMaxPointsIniciado < score){
+				//Actualizamos Iniciado
+				mOutbox.mMaxPointsIniciado = score;
+			}
+			else{
+				if(level.equals(getResources().getString(R.string.pref_level3_name)) && mOutbox.mMaxPointsMaestro < score){
+					//Actualizamos Maestro
+					mOutbox.mMaxPointsMaestro = score;
+				}
+			}
+		}
+
 		/*
 		if (mHardMode && mOutbox.mHardModeScore < finalScore) {
 			mOutbox.mHardModeScore = finalScore;
@@ -627,9 +698,9 @@ public class MainActivity extends AppCompatActivity implements
 		boolean mThatsAFiftyAchievement = false;
 
 		int mBoredSteps = 0;
-		int mMaxPointsAprendiz = 0;
-		int mMaxPointsIniciado = 0;
-		int mMaxPointsMaestro = 0;
+		int mMaxPointsAprendiz = -1;
+		int mMaxPointsIniciado = -1;
+		int mMaxPointsMaestro = -1;
 
 		boolean isEmpty() {
 			return !mHackerIniciadoAchievement && !mJuniorHackerAchievement && !mSeniorHackerAchievement &&

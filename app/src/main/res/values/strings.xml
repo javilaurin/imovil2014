@@ -138,6 +138,8 @@ limitations under the License.
     <string name="pref_level1_name">Aprendiz</string>
     <string name="pref_level2_name">Iniciado</string>
     <string name="pref_level3_name">Maestro</string>
+
+    <!--Google Games-->
     <string name="achievements_exception">Error al mostrar los logros</string>
     <string name="leaderboards_exception">Error al mostrar las tablas de puntuaciones</string>
     <string name="status_exception_error">%1$s (status %2$d). %3$s.</string>

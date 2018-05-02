@@ -451,14 +451,17 @@ public abstract class BaseExerciseFragment extends Fragment {
 	 *
 	 */
 	protected void saveScore() {
-		String user = getString(R.string.default_user_name);
+		//TODO añadir insertar puntuacion
+		((MainActivity)getActivity()).onEnteredScore(mScore, level().toString(this.getContext()));
+
+		/*String user = getString(R.string.default_user_name);
 
 		try {
 			HighscoreManager.addScore(getActivity().getApplicationContext(),
 					mScore, obtainExerciseId(), new Date(), user, level());
 		} catch (JSONException e) {
 			Log.v(getClass().getSimpleName(), "Error when saving score");
-		}
+		}*/
 	}
 
     interface Listener {
